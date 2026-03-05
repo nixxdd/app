@@ -8,22 +8,37 @@
 import SwiftUI
 
 struct InitialView: View {
+    
+    @Binding var initialized : Bool
+    
+    
     var body: some View {
-        NavigationStack() {
+    
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+        
             
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello")
+            Button(action: {
+                
+                initialized = true
+                
+            }) {
+                RoundedRectangle(cornerRadius: 50, style: .continuous)
+                    .foregroundColor(.cyan.opacity(0.5))
+                    .frame(width:250, height: 50)
+                    .shadow(radius: 10)
             }
-            .padding()
+            
+        }
+        .padding()
             
             
-        } // end of NavigationStack
+        
     }
 }
 
 #Preview {
-    InitialView()
+    InitialView(initialized: .constant(false))
 }

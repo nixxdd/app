@@ -9,7 +9,17 @@ import SwiftUI
 
 struct ContainerView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            
+            Tab("Home", systemImage: "house.fill") {
+                MainHomeView()
+            }
+            
+            Tab("Stats", systemImage: "chart.bar.xaxis") {
+                StatsView()
+            }
+            
+        }
     }
 }
 
