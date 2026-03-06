@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct appApp: App {
@@ -26,8 +27,9 @@ struct appApp: App {
                 ContainerView()
             } else {
                 
-                InitialView(initialized: $initialized)
+                InitialView()
             }
         }
+        .modelContainer(for: [Medicine.self, MedSchedule.self])
     }
 }

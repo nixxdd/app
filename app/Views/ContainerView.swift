@@ -14,9 +14,11 @@ struct ContainerView: View {
             Tab("Home", systemImage: "house.fill") {
                 MainHomeView()
             }
+
             
-            Tab("Stats", systemImage: "chart.bar.xaxis") {
-                StatsView()
+            Tab("My Meds", systemImage: "capsule.fill") {
+                MyMedsView()
+                
             }
             
         }
