@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "726AD71D2F597695007490DE"
-               BuildableName = "Carely.app"
-               BlueprintName = "Carely"
-               ReferencedContainer = "container:Carely.xcodeproj">
+               BuildableName = "PillWave.app"
+               BlueprintName = "PillWave"
+               ReferencedContainer = "container:PillWave.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "726AD71D2F597695007490DE"
-            BuildableName = "Carely.app"
-            BlueprintName = "Carely"
-            ReferencedContainer = "container:Carely.xcodeproj">
+            BuildableName = "PillWave.app"
+            BlueprintName = "PillWave"
+            ReferencedContainer = "container:PillWave.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "726AD71D2F597695007490DE"
-            BuildableName = "Carely.app"
-            BlueprintName = "Carely"
-            ReferencedContainer = "container:Carely.xcodeproj">
+            BuildableName = "PillWave.app"
+            BlueprintName = "PillWave"
+            ReferencedContainer = "container:PillWave.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

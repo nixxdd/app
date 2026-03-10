@@ -62,8 +62,9 @@ struct InitialNFCView: View {
                     
                     Circle()
                         .fill(.ultraThinMaterial)
-                        .frame(width: 550, height: 300)
-                        .shadow(color: Color.lime.opacity(0.35), radius: 40)
+                        .frame(width: 250, height: 300)
+                        .shadow(color: Color.violet.opacity(0.25), radius: 20, y: 10)
+                        .blur(radius: 10)
                     
                     AnimatedImage(name: "pillBuddy_NFC.gif") // pill with the NFC
                         .resizable()
@@ -87,7 +88,7 @@ struct InitialNFCView: View {
                         
                         Text("Get Started")
                             .font(.system(size:12, weight: .heavy))
-                            .foregroundColor(.lime)
+                            .foregroundColor(.white)
                         
                     } // end of ZStack of the botton
                     

@@ -9,36 +9,51 @@ import SwiftUI
 import SwiftData
 
 @Model
-class Medicine {
+class Medicine : Identifiable {
     
+    var id = UUID()
     var medName : String // text field
     var dose : String // text field
     var iconName : String // icon pick
     var iconLabel : String // icon pick
-    var confirmMethod : ConfirmMethod // pick
     var pillCount : Int // text field
-    var isActive : Bool // default true can be toggled by a slider
-    var takenDates : [Date] // log of the dates the medicine tracks themselves not the user
+    var stockEnabled: Bool
+    var stockAlertThreshold: Int
+    var isActive: Bool // default true can be toggled by a slider
+    var takenDates: [Date] // log of the dates the medicine tracks themselves not the user
     
-    var savedStreak : Int
-    var lastCheckedDate : Date?
+    var confirmMethod: ConfirmMethod // pick
+    var nfcEnabled: Bool // derived from confirmMethod
+    var siriEnabled: Bool // derived from confirmMethod
+    var siriPhrase: String
+    var linkedTagId: UUID?
     
-    @Relationship(deleteRule: .cascade) var schedule : MedSchedule?
+    var savedStreak: Int
+    var lastCheckedDate: Date?
+    
+    @Relationship(deleteRule: .cascade) var schedule: MedSchedule?
     // if medicine removed also its schedule
     
     
-    init(medName: String, dose: String, iconName: String, iconLabel: String, confirmMethod: ConfirmMethod, pillCount: Int, isActive : Bool) {
+    init(medName: String, dose: String, iconName: String, iconLabel: String,
+         confirmMethod: ConfirmMethod, pillCount: Int,
+         stockEnabled: Bool, stockAlertThreshold: Int, isActive: Bool) {
         self.medName = medName
         self.dose = dose
         self.iconName = iconName
         self.iconLabel = iconLabel
-        self.confirmMethod = confirmMethod
+        self.confirmMethod = confirmMethod   // ← this line was missing
         self.pillCount = pillCount
+        self.stockEnabled = stockEnabled
+        self.stockAlertThreshold = stockAlertThreshold
         self.isActive = isActive
         self.takenDates = []
         self.savedStreak = 0
         self.lastCheckedDate = nil
-        
+        self.nfcEnabled = confirmMethod == .nfc
+        self.siriEnabled = confirmMethod == .siri
+        self.siriPhrase = ""
+        self.linkedTagId = nil
     }
     
     

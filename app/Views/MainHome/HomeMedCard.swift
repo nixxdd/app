@@ -82,11 +82,12 @@ struct HomeMedCard: View {
 
     private var leadingIcon: some View {
         ZStack {
+            
             RoundedRectangle(cornerRadius: 14)
                 .fill(
                     isTaken
                     ? Color.green.opacity(0.12)
-                    : Color.violet.opacity(0.07)
+                    : MedIcon.color(for: medicine.iconName).opacity(0.07)
                 )
                 .frame(width: 48, height: 48)
 
@@ -97,7 +98,7 @@ struct HomeMedCard: View {
             } else {
                 Image(systemName: medicine.iconName)
                     .font(.system(size: 22))
-                    .foregroundColor(Color.violet)
+                    .foregroundColor(MedIcon.color(for: medicine.iconName))
             }
         }
     }
@@ -119,14 +120,14 @@ struct HomeMedCard: View {
                 Text(isTaken ? "Taken" : "Take")
                     .font(.system(size: 15, weight: .semibold))
             }
-            .foregroundColor(isTaken ? .white : Color.violet)
+            .foregroundColor(isTaken ? .white : MedIcon.color(for: medicine.iconName))
             .padding(.horizontal, 18)
             .padding(.vertical, 10)
             .background(
                 Capsule().fill(
                     isTaken
                     ? Color.green
-                    : Color.violet.opacity(0.10)
+                    : MedIcon.color(for: medicine.iconName).opacity(0.10)
                 )
             )
             .scaleEffect(animateButton ? 1.06 : 1.0)

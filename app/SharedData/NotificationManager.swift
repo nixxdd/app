@@ -4,72 +4,98 @@
 //
 //  Created by Foundation 34 on 09/03/26.
 //
-
-// NotificationManager.swift
 import UserNotifications
 
 class NotificationManager {
-    
-    // shared singleton — access it anywhere with NotificationManager.shared
+
     static let shared = NotificationManager()
-    
-    // ask the user for permission to send notifications
+
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(
             options: [.alert, .sound, .badge]
         ) { granted, error in
-            if granted {
-                print("notifications allowed")
-            } else {
-                print("notifications denied")
-            }
+            print(granted ? "notifications allowed" : "notifications denied")
         }
     }
-    
-    // schedule a daily notification for a medicine
+
+    // Schedule one notification per weekday the user picked
     func scheduleMedNotification(for medicine: Medicine) {
+        
+        // print(medicine.schedule)
+
         guard let schedule = medicine.schedule else { return }
         
-        let content = UNMutableNotificationContent()
-        content.title = "Time for \(medicine.medName) \(iconEmoji(for: medicine.iconName))"
-        content.body  = "Don't forget your \(medicine.dose) dose"
-        content.sound = .default
-        
-        // extract hour and minute from schedule.time
-        let components = Calendar.current.dateComponents([.hour, .minute], from: schedule.time)
-        
-        // trigger fires every day at this time
-        let trigger = UNCalendarNotificationTrigger(
-            dateMatching: components,
-            repeats: true
-        )
-        
-        let request = UNNotificationRequest(
-            identifier: medicine.medName, // unique ID per medicine
-            content: content,
-            trigger: trigger
-        )
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error {
-                print("failed to schedule: \(error)")
-            } else {
-                print("scheduled notification for \(medicine.medName)")
+        cancelNotification(for: medicine)
+
+        let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: schedule.time)
+
+        let weekdays = schedule.dayWeek.isEmpty ? Array(1...7) : schedule.dayWeek.map { $0.weekdayInt }
+
+        for weekday in weekdays {
+            let content = UNMutableNotificationContent()
+            content.title = "Time for \(medicine.medName) \(iconEmoji(for: medicine.iconName))"
+            content.body  = "Don't forget your \(medicine.dose) dose"
+            content.sound = .default
+
+            // Combine weekday + hour + minute into one trigger
+            var components        = DateComponents()
+            components.weekday    = weekday
+            components.hour       = timeComponents.hour
+            components.minute     = timeComponents.minute
+
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+            // Unique ID: "Aspirin-3" means Aspirin on Wednesday
+            let identifier = "\(medicine.medName)-\(weekday)"
+
+            let request = UNNotificationRequest(
+                identifier: identifier,
+                content: content,
+                trigger: trigger
+            )
+
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error {
+                    print("failed to schedule \(identifier): \(error)")
+                } else {
+                    print("scheduled \(medicine.medName) on weekday \(weekday) at \(timeComponents.hour ?? 0):\(timeComponents.minute ?? 0)")
+                }
             }
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.printPending()
+        }
     }
-    
-    // cancel notifications for a specific medicine
+
+    // Remove all weekday-specific notifications for this medicine
     func cancelNotification(for medicine: Medicine) {
+        // Cover all 7 possible weekday identifiers
+        let identifiers = (1...7).map { "\(medicine.medName)-\($0)" }
         UNUserNotificationCenter.current().removePendingNotificationRequests(
-            withIdentifiers: [medicine.medName]
+            withIdentifiers: identifiers
         )
     }
-    
-    // cancel ALL notifications — useful for testing
+
     func cancelAll() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
+    
+    func printPending(){
+        
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+                    print("--- Pending Notifications (\(requests.count)) ---")
+                    for r in requests {
+                        if let trigger = r.trigger as? UNCalendarNotificationTrigger {
+                            print("ID: \(r.identifier) | weekday: \(trigger.dateComponents.weekday ?? -1) | time: \(trigger.dateComponents.hour ?? 0):\(trigger.dateComponents.minute ?? 0)")
+                        } else {
+                            // shows up during the 5s test
+                            print("ID: \(r.identifier) | trigger: \(String(describing: r.trigger))")
+                        }
+                    }
+                    print("-------------------------------------------")
+                }
+        
+        
+    } // end of func
 }
-
 

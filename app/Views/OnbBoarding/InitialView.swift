@@ -77,6 +77,7 @@ struct InitialView: View {
                         .fill(.ultraThinMaterial)
                         .frame(width: 250, height: 300)
                         .shadow(color: Color.violet.opacity(0.25), radius: 20, y: 10)
+                        .blur(radius: 10)
                     
                     AnimatedImage(name: "PillBuddy_wave.gif")
                         .resizable()

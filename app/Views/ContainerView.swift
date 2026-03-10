@@ -21,6 +21,10 @@ struct ContainerView: View {
                 
             }
             
+            Tab("NFC", systemImage: "wave.3.right.circle.fill") {
+                NFCTagsView()
+            }
+            
         }
     }
 }

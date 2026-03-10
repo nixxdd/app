@@ -9,7 +9,38 @@ import SwiftUI
 
 struct SwiftUIView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        ZStack () {
+            RadialGradient(
+                
+                colors: [
+                    Color.lime.opacity(0.3),
+                    Color.violet.opacity(0.2),
+                    Color.white
+                ],
+                center: .topTrailing,
+                startRadius: 200,
+                endRadius: 600
+                
+            ).ignoresSafeArea()
+            
+            RadialGradient(
+                
+                colors: [
+                    Color.black.opacity(0.15),
+                    Color.lime.opacity(0.3),
+                    Color.violet.opacity(0.2),
+                    Color.white
+                ],
+                center: .bottomLeading,
+                startRadius: 200,
+                endRadius: 600
+                
+            ).ignoresSafeArea()
+                .blendMode(.multiply)
+            
+        }
+        
     }
 }
 

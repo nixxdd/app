@@ -11,9 +11,13 @@ import SwiftData
 @main
 struct appApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @AppStorage("initialized") private var initialized : Bool = false
     
     init() {
+        NotificationManager.shared.requestPermission()
+        
         if CommandLine.arguments.contains("-reset_arguments") {
             UserDefaults.standard.removeObject(forKey: "initialized")
         }
@@ -26,7 +30,6 @@ struct appApp: App {
             if initialized {
                 ContainerView()
             } else {
-                
                 InitialView()
             }
         }

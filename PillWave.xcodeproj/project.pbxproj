@@ -11,7 +11,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		726AD71E2F597695007490DE /* Carely.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Carely.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		726AD71E2F597695007490DE /* PillWave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PillWave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -45,7 +45,7 @@
 		726AD71F2F597695007490DE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				726AD71E2F597695007490DE /* Carely.app */,
+				726AD71E2F597695007490DE /* PillWave.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,9 +53,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		726AD71D2F597695007490DE /* Carely */ = {
+		726AD71D2F597695007490DE /* PillWave */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 726AD7292F597696007490DE /* Build configuration list for PBXNativeTarget "Carely" */;
+			buildConfigurationList = 726AD7292F597696007490DE /* Build configuration list for PBXNativeTarget "PillWave" */;
 			buildPhases = (
 				726AD71A2F597695007490DE /* Sources */,
 				726AD71B2F597695007490DE /* Frameworks */,
@@ -68,12 +68,12 @@
 			fileSystemSynchronizedGroups = (
 				726AD7202F597695007490DE /* app */,
 			);
-			name = Carely;
+			name = PillWave;
 			packageProductDependencies = (
 				726AD7E82F5C269A007490DE /* SDWebImageSwiftUI */,
 			);
 			productName = app;
-			productReference = 726AD71E2F597695007490DE /* Carely.app */;
+			productReference = 726AD71E2F597695007490DE /* PillWave.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -91,7 +91,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 726AD7192F597695007490DE /* Build configuration list for PBXProject "Carely" */;
+			buildConfigurationList = 726AD7192F597695007490DE /* Build configuration list for PBXProject "PillWave" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -108,7 +108,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				726AD71D2F597695007490DE /* Carely */,
+				726AD71D2F597695007490DE /* PillWave */,
 			);
 		};
 /* End PBXProject section */
@@ -265,6 +265,8 @@
 				DEVELOPMENT_TEAM = 4FV54L2C2L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PillWave;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -297,6 +299,8 @@
 				DEVELOPMENT_TEAM = 4FV54L2C2L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PillWave;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -322,7 +326,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		726AD7192F597695007490DE /* Build configuration list for PBXProject "Carely" */ = {
+		726AD7192F597695007490DE /* Build configuration list for PBXProject "PillWave" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				726AD7272F597696007490DE /* Debug */,
@@ -331,7 +335,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		726AD7292F597696007490DE /* Build configuration list for PBXNativeTarget "Carely" */ = {
+		726AD7292F597696007490DE /* Build configuration list for PBXNativeTarget "PillWave" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				726AD72A2F597696007490DE /* Debug */,

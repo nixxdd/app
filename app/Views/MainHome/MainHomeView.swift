@@ -11,6 +11,8 @@ import SDWebImageSwiftUI
 
 struct MainHomeView: View {
     
+    @StateObject private var nfcReader = NFCReader()
+    
     // @EnvironmentObject var vm: AppViewModel
     @AppStorage("userName") var userName = ""
     @AppStorage("initialized") var initialized: Bool = true
@@ -41,21 +43,22 @@ struct MainHomeView: View {
                         ZStack(alignment: .leading) {
                             
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .frame(width: 365, height: 150)
+                                .frame(width: 370, height: 150)
                                 .foregroundStyle(Color.white)
                                 .shadow(color:Color.black.opacity(0.6), radius: 5)
                             
                             VStack(){
                                 Text(greetingMessage)
                                     .font(.system(size: 20, weight: .heavy,design: .rounded))
+                                    .foregroundColor(Color.navy)
                                     .padding(10)
                                 
                                 // mascot and it's phrase
                                 
                                 Text(mascotMessage)
                                     .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                    .foregroundColor(Color.navy)
                                     .shadow(radius: 1)
-                                    .foregroundColor(Color.black)
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 10)
                                     .background(Color.white.opacity(0.9))
@@ -99,10 +102,11 @@ struct MainHomeView: View {
                             activeMeds: medsForSelectedDay,
                             pilbyMood: currentAvatarMood,
                             date: vm.selectedDate,
-                            onScanTapped: { }
+                            onScanTapped: { nfcReader.scan() }
                         )
                         
                     } // end of the VStack inner
+                    .padding(10)
                     
                 } // end of the scroll view
                 
@@ -118,6 +122,28 @@ struct MainHomeView: View {
                         .padding()
                         .presentationDetents([.medium])  // half screen sheet
                     }
+            
+            .onAppear {
+                
+                if UserDefaults.standard.bool(forKey: "siriLogRequested") {
+                    UserDefaults.standard.set(false, forKey: "siriLogRequested")
+                    medsForSelectedDay
+                        .filter { !$0.wasTaken(on: Date()) && $0.siriEnabled }
+                        .forEach { $0.markAsTaken() }
+                }
+                
+            }
+            .onChange(of: nfcReader.lastScannedMedicineName) { _, name in
+                guard let name = name else { return }
+                if let match = medicines.first(where: {
+                    $0.medName.lowercased() == name.lowercased() && $0.nfcEnabled
+                }) {
+                    match.markAsTaken()
+                }
+                nfcReader.lastScannedMedicineName = nil
+            }
+            
+            
             
         } // end of NavigationStack
         
@@ -161,62 +187,6 @@ struct MainHomeView: View {
         case 7: return .saturday
         default: return .monday
         }
-    }
-}
-
-struct MedDayRowView: View {
-    
-    let medicine: Medicine
-    let date: Date
-    
-    var isTaken: Bool { medicine.wasTaken(on: date) }
-    var isToday: Bool { Calendar.current.isDateInToday(date) }
-    
-    var body: some View {
-        HStack(spacing: 14) {
-            
-            // icon
-            Image(systemName: medicine.iconName)
-                .font(.title3)
-                .foregroundColor(Color.violet)
-                .frame(width: 44, height: 44)
-                .background(Color.violet.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-            
-            // name + time
-            VStack(alignment: .leading, spacing: 2) {
-                Text(medicine.medName)
-                    .font(.system(size: 15, weight: .bold))
-                if let schedule = medicine.schedule {
-                    Text(schedule.time.formatted(date: .omitted, time: .shortened))
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            Spacer()
-            
-            // taken indicator / button
-            if isToday {
-                Button(action: {
-                    medicine.markAsTaken()
-                }) {
-                    Image(systemName: isTaken ? "checkmark.circle.fill" : "circle")
-                        .font(.system(size: 28))
-                        .foregroundColor(isTaken ? Color.lime : Color.gray.opacity(0.4))
-                }
-                .buttonStyle(.plain)
-            } else {
-                // past days — just show status, no button
-                Image(systemName: isTaken ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .font(.system(size: 24))
-                    .foregroundColor(isTaken ? Color.lime : Color.red.opacity(0.4))
-            }
-        }
-        .padding(14)
-        .background(Color.white.opacity(0.7))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .shadow(color: Color.black.opacity(0.05), radius: 6, y: 2)
     }
 }
 

@@ -41,6 +41,21 @@ struct HomeMedsSection: View {
             }
 
             Spacer()
+            
+            Button(action: onScanTapped) {
+                HStack(spacing: 6) {
+                    Image(systemName: "wave.3.right.circle.fill")
+                        .font(.system(size: 14, weight: .semibold))
+                    Text("Scan")
+                        .font(.system(size: 14, weight: .semibold))
+                }
+                .foregroundColor(Color.violet)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color.violet.opacity(0.10))
+                .clipShape(Capsule())
+            }
+            .buttonStyle(.plain)
 
             Text(progress.total == 0 ? "–" : "\(progress.taken)/\(progress.total)")
                 .font(.system(size: 15, weight: .semibold))
