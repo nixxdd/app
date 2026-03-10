@@ -70,6 +70,18 @@ struct MainHomeView: View {
                                     )
                                     .offset(x:20)
                                 
+                            
+                                Button("Test Siri") {
+                                    UserDefaults.standard.set(true, forKey: "siriLogRequested")
+                                    
+                                    if UserDefaults.standard.bool(forKey: "siriLogRequested") {
+                                        UserDefaults.standard.set(false, forKey: "siriLogRequested")
+                                        medsForSelectedDay
+                                            .filter { !$0.wasTaken(on: Date()) && $0.siriEnabled }
+                                            .forEach { $0.markAsTaken() }
+                                    }
+                                }
+                                
                             } // end of VStack for the card
                             
                             AnimatedImage(name:"PillBuddy_wave.gif")

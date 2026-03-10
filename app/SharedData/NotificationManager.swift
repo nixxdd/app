@@ -43,7 +43,10 @@ class NotificationManager {
             components.hour       = timeComponents.hour
             components.minute     = timeComponents.minute
 
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let trigger = UNCalendarNotificationTrigger(
+                            dateMatching: components,
+                            repeats: true          
+                        )
 
             // Unique ID: "Aspirin-3" means Aspirin on Wednesday
             let identifier = "\(medicine.medName)-\(weekday)"
