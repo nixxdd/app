@@ -13,6 +13,10 @@ struct AddMedView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     
+    // for navigation
+    @State private var currentStep = 0
+    @State private var goingForward = true
+    
     // initializing the variables we need to fill from medicine
     
     @State private var medName : String = ""
@@ -21,17 +25,11 @@ struct AddMedView: View {
     @State private var confirmMethod: ConfirmMethod = .backBotton
     @State private var isActive: Bool = true
 
-    @State private var selectedIcon: MedIcon = MedIcon(
-            systemImage: "pill.fill",
-            label: "Tablet"
-        )
+    @State private var selectedIcon = "💊"
     
-    let icons: [MedIcon] = [
-            MedIcon(systemImage: "pill.fill", label: "Tablet"),
-            MedIcon(systemImage: "cross.case.fill", label: "Pack"),
-            MedIcon(systemImage: "cross.vial.fill", label: "Bottle"),
-            MedIcon(systemImage: "syringe.fill", label: "Injection"),
-        ]
+    private let emojiOptions = ["💊", "💉", "🩹", "🌿"]
+    
+    @State private var stockAlertTreshold = 7
     
     var isValid : Bool {
         !medName.trimmingCharacters(in: .whitespaces).isEmpty &&
@@ -47,17 +45,23 @@ struct AddMedView: View {
     @State var daysOfWeek : [DayOfWeek] = []
     @State var timesPerDay : Int = 1
     
+    
+    
     var body: some View {
         NavigationStack() {
             ZStack{
                 
-                Color.cyan.opacity(0.1)
+                Color.lightgray
                     .ignoresSafeArea()
                     .onTapGesture {
                         nameFieldFocused = false
                     }
                 
                 VStack(alignment: .center) {
+                    header
+                    
+                    
+                    
                     
                     
                     Text("Name Of Medicine")
@@ -182,8 +186,49 @@ struct AddMedView: View {
         newMed.schedule = schedule
         schedule.medicine = newMed
         
+        NotificationManager.shared.scheduleMedNotification(for: newMed)
+        
         dismiss()
     }
+    private var headerBar: some View {
+        HStack {
+            Button(currentStep == 0 ? "Cancel" : "Back") {
+                if currentStep == 0 {
+                    dismiss()
+                } else {
+                    navigate(to: currentStep - 1)
+                }
+            }
+            .font(.system(size: 16, weight: .medium))
+            .foregroundColor(Color(hex: "6c5ce7"))
+
+            Spacer()
+
+            Text(isEditing ? "Edit Medicine" : "New Medicine")
+                .font(.system(size: 17, weight: .semibold))
+
+            Spacer()
+
+            Text("Hidden")
+                .font(.system(size: 16, weight: .medium))
+                .opacity(0)
+        }
+        .padding(.horizontal, 20)
+        .padding(.top, 16)
+        .padding(.bottom, 8)
+    }
+    
+    private var progressBar: some View {
+        HStack(spacing: 6) {
+            ForEach(0..<3, id: \.self) { i in
+                Capsule()
+                    .fill(i <= currentStep ? Color.violet : Color.navy.opacity(0.2))
+                    .frame(height: 4)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.8), value: currentStep)
+            }
+        }
+    }
+
 }
 
 #Preview {
