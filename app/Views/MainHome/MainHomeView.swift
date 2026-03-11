@@ -12,6 +12,7 @@ import SDWebImageSwiftUI
 struct MainHomeView: View {
     
     @StateObject private var nfcReader = NFCReader()
+    @Environment(\.scenePhase) private var scenePhase
     
     // @EnvironmentObject var vm: AppViewModel
     @AppStorage("userName") var userName = ""
@@ -52,7 +53,7 @@ struct MainHomeView: View {
                                     .font(.system(size: 20, weight: .heavy,design: .rounded))
                                     .foregroundColor(Color.navy)
                                     .padding(15)
-                                    .offset(x:25)
+                                    
                                 
                                 // mascot and it's phrase
                                 
@@ -144,6 +145,16 @@ struct MainHomeView: View {
                     match.markAsTaken()
                 }
                 nfcReader.lastScannedMedicineName = nil
+            }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    if UserDefaults.standard.bool(forKey: "siriLogRequested") {
+                        UserDefaults.standard.set(false, forKey: "siriLogRequested")
+                        medsForSelectedDay
+                            .filter { !$0.wasTaken(on: Date()) }
+                            .forEach { $0.markAsTaken() }
+                    }
+                }
             }
             
             

@@ -36,6 +36,7 @@ class NotificationManager {
             content.title = "Time for \(medicine.medName) \(iconEmoji(for: medicine.iconName))"
             content.body  = "Don't forget your \(medicine.dose) dose"
             content.sound = .default
+            content.categoryIdentifier = "MEDICATION_REMINDER"
 
             // Combine weekday + hour + minute into one trigger
             var components        = DateComponents()

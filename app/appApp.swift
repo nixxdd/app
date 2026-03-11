@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import AppIntents
 
 @main
 struct appApp: App {
@@ -17,6 +18,7 @@ struct appApp: App {
     
     init() {
         NotificationManager.shared.requestPermission()
+        PleaseHeptaShortcuts.updateAppShortcutParameters()
         
         if CommandLine.arguments.contains("-reset_arguments") {
             UserDefaults.standard.removeObject(forKey: "initialized")

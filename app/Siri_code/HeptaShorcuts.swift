@@ -5,7 +5,7 @@ struct PleaseHeptaShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: LogMedicationIntent(),
             phrases: [
-                "Log my medication in \(.applicationName)",
+                "Confirm my medication in \(.applicationName)",
                 "Track my meds in \(.applicationName)"
             ],
             shortTitle: "Log Medication",
