@@ -79,9 +79,9 @@ struct InitialView: View {
                         .shadow(color: Color.violet.opacity(0.25), radius: 20, y: 10)
                         .blur(radius: 10)
                     
-                    AnimatedImage(name: "PillBuddy_wave.gif")
+                    AnimatedImage(name: "test.gif")
                         .resizable()
-                        .scaleEffect(1.1)
+                        .scaleEffect(1)
                         .scaledToFit()
                         .frame(width: 350, height: 250, alignment: .center)
                         .clipShape(Circle())
