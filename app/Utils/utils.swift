@@ -165,7 +165,7 @@ extension MainHomeView {
 func iconEmoji(for systemImage: String) -> String {
     switch systemImage {
     case "pill.fill": return "💊"
-    case "cross.case.fill":  return "🩹"
+    case "cross.case.fill":  return "🟥"
     case "cross.vial.fill":  return "🧪"
     case "syringe.fill": return "💉"
     default: return "💊"

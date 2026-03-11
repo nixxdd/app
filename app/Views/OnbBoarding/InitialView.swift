@@ -61,13 +61,13 @@ struct InitialView: View {
             VStack(alignment : .center, spacing : 12) {
                 
                 Text("Welcome! I'm your pill buddy")
-                    .font(.system(size:30, weight: .heavy))
+                    .font(.system(size:30, weight: .heavy, design: .rounded))
                     .frame(width: 250, alignment: .center)
                     .multilineTextAlignment(.center)
                 
                 
                 Text("I'll Help you keep track of your meds in a simple, smart way")
-                    .font(.system(size:18, weight: .regular))
+                    .font(.system(size:18, weight: .regular, design: .rounded))
                     .frame(width: 250, alignment: .center)
                     .multilineTextAlignment(.center)
                 
@@ -81,6 +81,7 @@ struct InitialView: View {
                     
                     AnimatedImage(name: "PillBuddy_wave.gif")
                         .resizable()
+                        .scaleEffect(1.1)
                         .scaledToFit()
                         .frame(width: 350, height: 250, alignment: .center)
                         .clipShape(Circle())
@@ -89,7 +90,7 @@ struct InitialView: View {
                 
                 
                 Text("Enter Your Name")
-                    .font(.system(size:16, weight: .semibold))
+                    .font(.system(size:16, weight: .semibold, design: .rounded))
                     .frame(width: 280, alignment: .leading)
                 
                 TextField("Type", text: $userName)
@@ -111,13 +112,13 @@ struct InitialView: View {
                 }) {
                     ZStack(alignment:.center) {
                         RoundedRectangle(cornerRadius: 50, style: .continuous)
-                            .foregroundColor(Color.lime.opacity(0.5))
-                            .frame(width:150, height: 50, alignment: .center)
+                            .foregroundColor(Color.lime)
+                            .frame(width:160, height: 50, alignment: .center)
                             .shadow(color:Color.gray, radius: 10)
                         
                         Text("Click To Continue")
-                            .font(.system(size:12, weight: .heavy))
-                            .foregroundColor(.violet)
+                            .font(.system(size:15, weight: .heavy, design: .rounded))
+                            .foregroundColor(.navy)
                         
                         
                     } // end of ZStack

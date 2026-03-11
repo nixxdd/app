@@ -49,12 +49,12 @@ struct InitialNFCView: View {
             
             VStack (alignment : .center, spacing : 12) {
                 Text("Confirm your dose with a tap")
-                    .font(.system(size:30, weight: .heavy))
+                    .font(.system(size:30, weight: .heavy, design: .rounded))
                     .frame(width: 250, alignment: .center)
                     .multilineTextAlignment(.center)
                 
                 Text("Just bring your phone close to the NFC tag on your pill bottle")
-                    .font(.system(size:18, weight: .regular))
+                    .font(.system(size:18, weight: .regular, design: .rounded))
                     .frame(width: 250, alignment: .center)
                     .multilineTextAlignment(.center)
                 
@@ -68,8 +68,9 @@ struct InitialNFCView: View {
                     
                     AnimatedImage(name: "pillBuddy_NFC.gif") // pill with the NFC
                         .resizable()
+                        .scaleEffect(1.1)
                         .scaledToFit()
-                        .frame(width: 500, height: 280, alignment: .center)
+                        .frame(width: 500, height: 260, alignment: .center)
                         .clipShape(Circle())
                     
                 } // end of ZStack
@@ -82,12 +83,12 @@ struct InitialNFCView: View {
                     ZStack(){
                         
                         RoundedRectangle(cornerRadius: 50, style: .continuous)
-                            .foregroundColor(Color.violet.opacity(0.5))
-                            .frame(width:150, height: 50, alignment: .center)
+                            .foregroundColor(Color.violet)
+                            .frame(width:160, height: 50, alignment: .center)
                             .shadow(color:Color.gray, radius: 10)
                         
                         Text("Get Started")
-                            .font(.system(size:12, weight: .heavy))
+                            .font(.system(size:15, weight: .heavy, design: .rounded))
                             .foregroundColor(.white)
                         
                     } // end of ZStack of the botton

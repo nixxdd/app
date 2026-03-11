@@ -114,7 +114,7 @@ struct MedicineScheduleStepView: View {
                     if stockEnabled {
                         Divider().padding(.leading, 16)
                         rowView(label: "Pill count") {
-                            Stepper("", value: $pillCount, in: 1...500, step: 5)
+                            Stepper("", value: $pillCount, in: 1...500)
                                 .labelsHidden()
                             Text("\(pillCount)")
                                 .font(.system(size: 16, weight: .semibold))

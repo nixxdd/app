@@ -17,7 +17,7 @@ struct NFCSetupView: View {
             VStack(spacing: 24) {
 
                 // Title
-                VStack(spacing: 6) {
+                VStack(spacing: 10) {
                     Text("Set up NFC Tag")
                         .font(.system(size: 26, weight: .bold, design: .rounded))
                         .tracking(-0.4)

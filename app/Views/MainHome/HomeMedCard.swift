@@ -71,7 +71,7 @@ struct HomeMedCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.navy.opacity(isTaken ? 0.05 : 0.2), lineWidth: 2)
+                .stroke(Color.navy.opacity(isTaken ? 0.05 : 0.2), lineWidth: 1)
         )
         .shadow(
             color:Color.navy.opacity(0.1),

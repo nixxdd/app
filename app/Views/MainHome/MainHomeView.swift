@@ -43,7 +43,7 @@ struct MainHomeView: View {
                         ZStack(alignment: .leading) {
                             
                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .frame(width: 370, height: 150)
+                                .frame(width: 365, height: 170)
                                 .foregroundStyle(Color.white)
                                 .shadow(color:Color.black.opacity(0.6), radius: 5)
                             
@@ -51,7 +51,8 @@ struct MainHomeView: View {
                                 Text(greetingMessage)
                                     .font(.system(size: 20, weight: .heavy,design: .rounded))
                                     .foregroundColor(Color.navy)
-                                    .padding(10)
+                                    .padding(15)
+                                    .offset(x:25)
                                 
                                 // mascot and it's phrase
                                 
@@ -68,27 +69,17 @@ struct MainHomeView: View {
                                             .foregroundStyle(Color.violet.opacity(0.3))
                                             .shadow(color:Color.black.opacity(0.3), radius: 5)
                                     )
-                                    .offset(x:20)
+                                    .offset(x:25)
                                 
-                            
-                                Button("Test Siri") {
-                                    UserDefaults.standard.set(true, forKey: "siriLogRequested")
-                                    
-                                    if UserDefaults.standard.bool(forKey: "siriLogRequested") {
-                                        UserDefaults.standard.set(false, forKey: "siriLogRequested")
-                                        medsForSelectedDay
-                                            .filter { !$0.wasTaken(on: Date()) && $0.siriEnabled }
-                                            .forEach { $0.markAsTaken() }
-                                    }
-                                }
                                 
                             } // end of VStack for the card
                             
                             AnimatedImage(name:"PillBuddy_wave.gif")
                                 .resizable()
-                                .frame(width: 180, height: 150)
-                                .scaleEffect(0.9)
-                                .offset(x:230)
+                                .frame(width: 200, height: 155)
+                                .scaleEffect(1)
+                                .offset(x:210)
+                                .shadow(radius: 1)
                             
                         } // end of ZStack for greeting
                     
