@@ -106,11 +106,15 @@ struct HomeMedCard: View {
     private var takeButton: some View {
         Button {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.75)) {
-                medicine.markAsTaken()
+                if isTaken {
+                    medicine.markAsUntaken(on: date)
+                } else {
+                    medicine.markAsTaken()
+                }
                 animateButton.toggle()
             }
             let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(.success)
+            generator.notificationOccurred(isTaken ? .warning : .success)
         } label: {
             HStack(spacing: 6) {
                 if isTaken {
@@ -118,7 +122,7 @@ struct HomeMedCard: View {
                         .font(.system(size: 12, weight: .bold))
                 }
                 Text(isTaken ? "Taken" : "Take")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
             }
             .foregroundColor(isTaken ? .white : MedIcon.color(for: medicine.iconName))
             .padding(.horizontal, 18)

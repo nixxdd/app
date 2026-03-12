@@ -12,7 +12,7 @@ import Combine
 
 class NFCReader: NSObject, ObservableObject, NFCNDEFReaderSessionDelegate {
     @Published var scannedText = "Ready to scan"
-    @Published var lastScannedMedicineName: String? = nil  
+    @Published var lastScannedMedicineName: String? = nil
     
     var session: NFCNDEFReaderSession?
 

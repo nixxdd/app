@@ -62,8 +62,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         switch response.actionIdentifier {
             
         case "CONFIRM_MEDICATION":
-            // sets the flag that MainHomeView reads on scenePhase .active
-            UserDefaults.standard.set(true, forKey: "siriLogRequested")
+            let name = response.notification.request.content.userInfo["medicineName"] as? String ?? ""
+            UserDefaults.standard.set(name, forKey: "notifConfirmMedicine")
             
         case "SNOOZE_5", "SNOOZE_10", "SNOOZE_15":
             let minutes: Double

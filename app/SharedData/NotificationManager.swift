@@ -37,6 +37,7 @@ class NotificationManager {
             content.body  = "Don't forget your \(medicine.dose) dose"
             content.sound = .default
             content.categoryIdentifier = "MEDICATION_REMINDER"
+            content.userInfo = ["medicineName": medicine.medName]
 
             // Combine weekday + hour + minute into one trigger
             var components        = DateComponents()
@@ -82,6 +83,14 @@ class NotificationManager {
 
     func cancelAll() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    }
+    
+    func cancelTodayNotification(for medicine: Medicine) {
+        let weekday = Calendar.current.component(.weekday, from: Date())
+        let identifier = "\(medicine.medName)-\(weekday)"
+        UNUserNotificationCenter.current().removePendingNotificationRequests(
+            withIdentifiers: [identifier]
+        )
     }
     
     func printPending(){

@@ -126,17 +126,6 @@ struct MainHomeView: View {
                         .padding()
                         .presentationDetents([.medium])  // half screen sheet
                     }
-            
-            .onAppear {
-                
-                if UserDefaults.standard.bool(forKey: "siriLogRequested") {
-                    UserDefaults.standard.set(false, forKey: "siriLogRequested")
-                    medsForSelectedDay
-                        .filter { !$0.wasTaken(on: Date()) && $0.siriEnabled }
-                        .forEach { $0.markAsTaken() }
-                }
-                
-            }
             .onChange(of: nfcReader.lastScannedMedicineName) { _, name in
                 guard let name = name else { return }
                 if let match = medicines.first(where: {
@@ -148,15 +137,27 @@ struct MainHomeView: View {
             }
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active {
+
+                    // Siri confirmation — only marks medicines with siriEnabled
                     if UserDefaults.standard.bool(forKey: "siriLogRequested") {
                         UserDefaults.standard.set(false, forKey: "siriLogRequested")
-                        medsForSelectedDay
-                            .filter { !$0.wasTaken(on: Date()) }
-                            .forEach { $0.markAsTaken() }
+                        let toConfirm = medsForSelectedDay.filter { !$0.wasTaken(on: Date()) && $0.siriEnabled }
+                        toConfirm.forEach {
+                            $0.markAsTaken()
+                            NotificationManager.shared.cancelTodayNotification(for: $0)
+                        }
                     }
+
+                    // Notification "Mark as Taken" — marks only the specific medicine
+                    if let name = UserDefaults.standard.string(forKey: "notifConfirmMedicine"), !name.isEmpty {
+                        UserDefaults.standard.removeObject(forKey: "notifConfirmMedicine")
+                        medsForSelectedDay
+                            .first { $0.medName == name && !$0.wasTaken(on: Date()) }?
+                            .markAsTaken()
+                    }
+
                 }
             }
-            
             
             
         } // end of NavigationStack

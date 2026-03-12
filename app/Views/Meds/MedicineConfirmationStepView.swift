@@ -17,6 +17,8 @@ struct MedicineConfirmationStepView: View {
     @FocusState private var siriFieldFocused: Bool
     
     @State private var showNFCSetup = false
+    
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -111,7 +113,7 @@ struct MedicineConfirmationStepView: View {
                                     Image(systemName: "mic.circle.fill")
                                         .font(.system(size: 16))
                                         .foregroundColor(Color.violet.opacity(0.6))
-                                    Text("Log my medication in PillWave")
+                                    Text("Confirm my medication in PillWave")
                                         .font(.system(size: 14, weight: .medium))
                                         .foregroundColor(Color.navy)
                                     Spacer()
@@ -157,8 +159,11 @@ struct MedicineConfirmationStepView: View {
             else { confirmMethod = .manual }
         }
         .sheet(isPresented: $showNFCSetup) {
-            NFCSetupView(medicineName: medicineName)
-                .presentationDetents([.large])
+            NFCSetupView(
+                medicineName: medicineName,
+                onDone: { showNFCSetup = false }
+            )
+            .presentationDetents([.large])
         }
     }
 

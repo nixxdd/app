@@ -185,7 +185,7 @@ struct NFCScanResultView: View {
                 VStack(spacing: 16) {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 60))
-                        .foregroundColor(Color.lime)
+                        .foregroundColor(Color.green)
 
                     Text("Dose logged!")
                         .font(.system(size: 28, weight: .heavy, design: .rounded))

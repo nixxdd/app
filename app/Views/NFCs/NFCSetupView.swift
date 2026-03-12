@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct NFCSetupView: View {
-    let medicineName: String         
+    let medicineName: String
+    var onDone: () -> Void = {}
     @StateObject private var writer = NFCWriter()
     @State private var tagWritten = false
 
@@ -84,6 +85,30 @@ struct NFCSetupView: View {
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 14))
                     .transition(.move(edge: .top).combined(with: .opacity))
+
+                    // Done button — dismisses back to MedicineConfirmationStepView
+                    Button {
+                        onDone()
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 16))
+                            Text("Done")
+                                .font(.system(size: 17, weight: .semibold))
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(
+                            LinearGradient(
+                                colors: [Color.green, Color.green.opacity(0.7)],
+                                startPoint: .leading, endPoint: .trailing
+                            )
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+                    .buttonStyle(.plain)
+                    .transition(.move(edge: .top).combined(with: .opacity))
                 }
 
                 // Error banner
@@ -130,7 +155,6 @@ struct NFCSetupView: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 40)
         }
-        // listen for success from the writer
         .onChange(of: writer.alertMessage) { _, msg in
             if msg.contains("Success") {
                 withAnimation { tagWritten = true }

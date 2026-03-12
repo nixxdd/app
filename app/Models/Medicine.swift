@@ -90,6 +90,10 @@ class Medicine : Identifiable {
         
     }
     
+    func markAsUntaken(on date: Date = Date()) {
+        takenDates.removeAll { Calendar.current.isDate($0, inSameDayAs: date) }
+    }
+    
     func validateStreak() {
             let calendar = Calendar.current
             let today    = Date()

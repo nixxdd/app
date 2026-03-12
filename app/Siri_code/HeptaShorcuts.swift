@@ -13,3 +13,4 @@ struct PleaseHeptaShortcuts: AppShortcutsProvider {
         )
     }
 }
+
